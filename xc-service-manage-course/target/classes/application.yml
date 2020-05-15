@@ -1,0 +1,49 @@
+server:
+  port: 31200
+spring:
+  application:
+    name: xc-service-manage-course
+#  data:
+#    mongodb:
+#      uri: mongodb://192.168.127.3:27017
+#      database: xc_cms
+  datasource:
+    druid:
+      url: jdbc:mysql://192.168.127.3:3306/xc_course?characterEncoding=utf-8
+      username: root
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
+      initialSize: 5  #初始建立连接数量
+      minIdle: 5  #最小连接数量
+      maxActive: 20 #最大连接数量
+      maxWait: 10000  #获取连接最大等待时间，毫秒
+      testOnBorrow: true #申请连接时检测连接是否有效
+      testOnReturn: false #归还连接时检测连接是否有效
+      timeBetweenEvictionRunsMillis: 60000 #配置间隔检测连接是否有效的时间（单位是毫秒）
+      minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+pagehelper:
+  helper-dialect: mysql
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:50101/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+course-publish:
+  siteId: 5b30cba5f58b4411fc6cb1e5
+  templateId: 5e71a2d5e997ec1ff087600b
+  previewUrl: http://www.xuecheng.com/cms/preview/
+  pageWebPath: /course/detail/
+  pagePhysicalPath: /course/detail/
+  dataUrlPre: http://localhost:31200/course/courseview/
+
+logging:
+  level:
+    com.xuecheng.manage_course.dao: DEBUG
